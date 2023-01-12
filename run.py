@@ -103,6 +103,15 @@ def calculate_stock_data(data):
     
     return new_stock_data
 
+def get_stock_values(data):
+    """
+    Get a list with the types of sandwiches.
+    Displays the next day stock suggestion as a dictionary {sandwich type: stock quantity}
+    """
+    headings = SHEET.worksheet("stock").get_all_values()[0]
+    stock_values = {key: value for key,value in zip(headings, data)}
+    return stock_values
+
 def main():
     """
     Run all program functions
@@ -115,6 +124,8 @@ def main():
     sales_columns = get_last_5_entries_sales()
     stock_data = calculate_stock_data(sales_columns)
     update_worksheet(stock_data, "stock")
+    stock_values = get_stock_values(stock_data)
+    print(stock_values)
 
 print("Welcome to Love Sandwiches Data Automation")
 main()
